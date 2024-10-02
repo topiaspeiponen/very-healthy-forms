@@ -1,16 +1,17 @@
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText } from "@mui/material";
 import { Core10Form, RadioGroupQuestion } from "../utils/types";
-import { Control, Controller, Path } from "react-hook-form";
+import { Control, Controller, FieldError, Path } from "react-hook-form";
 
 type InputRadioGroupProps<T extends Record<string, number>> = {
     name: Path<T>;
     control: Control<T, any>;
     question: RadioGroupQuestion;
+    optionType: 'string' | 'number';
     background?: 'light' | 'dark';
 }
 
 export default function InputRadioGroup<T extends Record<string, number>>(props: InputRadioGroupProps<T>) {
-    const { name, control, question } = props;
+    const { name, control, optionType, question } = props;
     return (
         <FormControl component="fieldset" required>
             <FormLabel component="legend" id="demo-row-radio-buttons-group-label">{question.groupLabel}</FormLabel>
@@ -20,14 +21,20 @@ export default function InputRadioGroup<T extends Record<string, number>>(props:
                 render={({
                     field: { onChange, value },
                     fieldState: { error },
-                    formState,
                     }) => (
+                        <>
                     <RadioGroup
                         value={value}
-                        onChange={onChange}
+                        onChange={
+                            (_e, value) => {
+                                if (optionType === 'number') {
+                                    const parsedValue = parseInt(value);
+                                    return onChange(parsedValue)
+                                }
+                                return onChange(value)
+                            }
+                        }
                         row
-                        aria-labelledby="demo-row-radio-buttons-group-label"
-                        name="row-radio-buttons-group"
                     >
                         {question.options.map((option) => {
                             return (
@@ -40,8 +47,11 @@ export default function InputRadioGroup<T extends Record<string, number>>(props:
                             )
                         })}
                     </RadioGroup>
+                    {error?.message && <FormHelperText>{error.message}</FormHelperText>}
+                    </>
                 )}
             />
+        
         </FormControl>
     )
 };
