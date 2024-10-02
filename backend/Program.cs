@@ -1,33 +1,36 @@
+using backend;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddDbContext<FormsDbContext>(opt => opt.UseInMemoryDatabase("Forms"));
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddAuthorization();
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType<Query>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+// Serve React app from ./frontend/dist directory
 app.UseFileServer(new FileServerOptions
 {
     FileProvider = new PhysicalFileProvider(
-           Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
+           System.IO.Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
 });
 
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
+// Following code ensures that we have seeded the DB with default values
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<FormsDbContext>();
+    dbContext.Database.EnsureCreated();
+}
+
+app.MapGraphQL();
 
 app.Run();
