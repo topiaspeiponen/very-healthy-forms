@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace backend;
 
 public class FormQueryType : ObjectType<Form>
@@ -16,6 +18,7 @@ public class FormFieldQueryType : ObjectType<FormField>
         descriptor.Field(f => f.Id).Type<NonNullType<IdType>>();
         descriptor.Field(f => f.FieldName).Type<StringType>();
         descriptor.Field(f => f.FieldType).Type<StringType>();
+        descriptor.Field(f => f.FieldLabel).Type<StringType>();
         descriptor.Field(f => f.FormId).Type<NonNullType<IntType>>();
         descriptor.Field(f => f.Form).Ignore();
     }
@@ -41,6 +44,17 @@ public class FormSubmissionFieldType : ObjectType<FormSubmissionField>
 }
 
 public class Query { 
-    public  IQueryable<Form> GetForms([Service] FormsDbContext dbContext)
-        => dbContext.Forms;
+    public  async Task<List<Form>> GetForms([Service] FormsDbContext dbContext)
+        => await dbContext.Forms.ToListAsync();
+    public  async Task<Form?> GetForm([Service] FormsDbContext dbContext, Guid id)
+        => await dbContext.Forms
+            .Include(f => f.Fields)
+            .FirstOrDefaultAsync(f => f.Id == id);
+    public  async Task<List<FormSubmission>> GetSubmissions([Service] FormsDbContext dbContext)
+        => await dbContext.FormSubmissions.ToListAsync();
+    public  async Task<FormSubmission?> GetSubmission([Service] FormsDbContext dbContext, Guid id)
+        => await dbContext.FormSubmissions
+            .Include(f => f.SubmissionFields)
+            .FirstOrDefaultAsync(f => f.Id == id);
 }
+

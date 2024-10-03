@@ -1,28 +1,32 @@
+using System.ComponentModel.DataAnnotations.Schema;
 namespace backend;
-
 public class Form {
-    public int Id { get; set; }
-    public string? Name { get; set; }
+    public Guid Id { get; set; }
+    public required string Name { get; set; }
     public ICollection<FormField>? Fields { get; set; }
 }
 public class FormField {
-    public int Id { get; set; }
-    public int FormId { get; set; }
+    public Guid Id { get; set; }
+    public Guid FormId { get; set; }
     public Form? Form { get; set; } 
-    public string? FieldName { get; set; }
-    public string? FieldType { get; set;}
+    public required string FieldName { get; set; }
+    public required string FieldType { get; set;}
+    public required string FieldLabel { get; set;}
 }
 public class FormSubmission {
-    public int Id { get; set; }
-    public int FormId { get; set; }
-     public Form? Form { get; set; }
-     public ICollection<FormSubmissionField>? SubmissionFields { get; set; }
+    public Guid Id { get; set; }
+    public Guid FormId { get; set; }
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+    public DateTime Created { get; set; }
+    public required string SubmitterName { get; set; }
+    public Form? Form { get; set; }
+    public ICollection<FormSubmissionField>? SubmissionFields { get; set; }
 }
 public class FormSubmissionField {
-    public int Id { get; set; }
-    public int FormSubmissionId { get; set; }
-     public FormSubmission? FormSubmission { get; set; } 
-    public int FormFieldId { get; set; }
+    public Guid Id { get; set; }
+    public Guid FormSubmissionId { get; set; }
+    public FormSubmission? FormSubmission { get; set; } 
+    public Guid FormFieldId { get; set; }
     public FormField? FormField { get; set; } 
-    public string? Value;
+    public required string Value;
 }

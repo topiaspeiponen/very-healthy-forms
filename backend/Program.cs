@@ -9,7 +9,8 @@ builder.Services.AddDbContext<FormsDbContext>(opt => opt.UseInMemoryDatabase("Fo
 builder.Services.AddAuthorization();
 builder.Services
     .AddGraphQLServer()
-    .AddQueryType<Query>();
+    .AddQueryType<Query>()
+    .AddMutationType<Mutation>();
 
 var app = builder.Build();
 
