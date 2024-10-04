@@ -5,6 +5,17 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddDbContext<FormsDbContext>(opt => opt.UseInMemoryDatabase("Forms"));
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowAnyOrigin();
+        });
+});
 
 builder.Services.AddAuthorization();
 builder.Services
@@ -20,7 +31,7 @@ app.UseFileServer(new FileServerOptions
     FileProvider = new PhysicalFileProvider(
            System.IO.Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
 });
-
+app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

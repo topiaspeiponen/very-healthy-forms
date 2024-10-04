@@ -4,7 +4,7 @@ public class CreateFormSubmissionInput
 {
     public Guid FormId { get; set; }
     public required string SubmitterName { get; set;}
-    public required List<CreateFormSubmissionFieldInput> Fields { get; set; }
+    public required List<CreateFormSubmissionFieldInput> SubmissionFields { get; set; }
 }
 
 public class CreateFormSubmissionFieldInput
@@ -20,17 +20,19 @@ public class Mutation
         [Service] FormsDbContext dbContext, 
         CreateFormSubmissionInput input)
     {
+        Console.WriteLine("Heydo ", input);
         // Create a new form entity
         var newSubmissionFormId = Guid.NewGuid();
         var submission = new FormSubmission
         {
             FormId = input.FormId,
             SubmitterName = input.SubmitterName,
-            SubmissionFields = input.Fields.Select(f => new FormSubmissionField
+            SubmissionFields = input.SubmissionFields.Select(f => new FormSubmissionField
             {
                 FormSubmissionId = newSubmissionFormId,
                 FormFieldId = f.FormFieldId,
-                Value = f.Value
+                Value = f.Value,
+                Name = f.Name
             }).ToList()
         };
 

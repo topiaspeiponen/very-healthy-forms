@@ -1,3 +1,22 @@
+export type FormsResponse = {
+    forms: Questionnaire[];
+}
+
+export type Questionnaire = {
+    id: string;
+    name: string;
+    slug: string;
+    fields: QuestionnaireField[];
+}
+
+export type QuestionnaireField = {
+    id: string;
+    formId: string;
+    fieldName: string;
+    fieldType: string;
+    fieldLabel: string;
+}
+
 export type Core10Form = {
     "1": number;
     "2": number;
@@ -12,7 +31,7 @@ export type Core10Form = {
 }
 
 export type RadioGroupQuestion = {
-    id: number;
+    id: string;
     groupLabel: string;
     options: Array<{
         label: string;

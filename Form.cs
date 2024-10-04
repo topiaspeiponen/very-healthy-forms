@@ -3,14 +3,18 @@ namespace backend;
 public class Form {
     public Guid Id { get; set; }
     public required string Name { get; set; }
+    public required string Slug { get; set; }
     public ICollection<FormField>? Fields { get; set; }
+}
+public enum FormFieldType {
+    RadioNumber, RadioNumberReverse, Text
 }
 public class FormField {
     public Guid Id { get; set; }
     public Guid FormId { get; set; }
     public Form? Form { get; set; } 
     public required string FieldName { get; set; }
-    public required string FieldType { get; set;}
+    public FormFieldType FieldType { get; set;}
     public required string FieldLabel { get; set;}
 }
 public class FormSubmission {
@@ -28,5 +32,6 @@ public class FormSubmissionField {
     public FormSubmission? FormSubmission { get; set; } 
     public Guid FormFieldId { get; set; }
     public FormField? FormField { get; set; } 
-    public required string Value;
+    public required string Value { get; set; }
+    public required string Name { get; set; }
 }

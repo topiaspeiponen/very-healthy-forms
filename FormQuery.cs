@@ -8,6 +8,7 @@ public class FormQueryType : ObjectType<Form>
     {
         descriptor.Field(f => f.Id).Type<NonNullType<IdType>>();
         descriptor.Field(f => f.Name).Type<StringType>();
+        descriptor.Field(f => f.Slug).Type<StringType>();
         descriptor.Field(f => f.Fields).Type<ListType<FormFieldQueryType>>();
     }
 }
@@ -45,7 +46,7 @@ public class FormSubmissionFieldType : ObjectType<FormSubmissionField>
 
 public class Query { 
     public  async Task<List<Form>> GetForms([Service] FormsDbContext dbContext)
-        => await dbContext.Forms.ToListAsync();
+        => await dbContext.Forms.Include(f => f.Fields).ToListAsync();
     public  async Task<Form?> GetForm([Service] FormsDbContext dbContext, Guid id)
         => await dbContext.Forms
             .Include(f => f.Fields)
