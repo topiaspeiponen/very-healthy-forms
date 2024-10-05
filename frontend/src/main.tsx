@@ -7,6 +7,26 @@ import Root from './routes/root.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FillForm from './routes/fill-form/fill-form.tsx';
 import ViewForms from './routes/view-forms/view-forms.tsx';
+import SubmissionView from './components/SubmissionView.tsx';
+import createTheme from '@mui/material/styles/createTheme';
+import { ThemeProvider } from '@emotion/react';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#f77643',
+    },
+  },
+  components: {
+    MuiFormHelperText: {
+      styleOverrides: {
+        root: {
+          marginLeft: '0',
+        },
+      },
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -19,7 +39,12 @@ const router = createBrowserRouter([
   },
   {
     path: "/view-forms",
-    element: <ViewForms />
+    element: <ViewForms />,
+  },
+
+  {
+    path: "/view-forms/:formId",
+    element: <SubmissionView />
   }
 ]);
 
@@ -31,7 +56,9 @@ const client = new ApolloClient({
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ApolloProvider client={client}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </ApolloProvider>
   </StrictMode>,
 )

@@ -3,6 +3,7 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_FORMS } from "../../utils/queries.ts";
 import QuestionnaireForm from "../../components/QuestionnaireForm.tsx";
+import { CircularProgress } from "@mui/material";
 
 export default function FillForm() {
   const { formSlug } = useParams<{ formSlug: string }>();
@@ -10,7 +11,7 @@ export default function FillForm() {
     variables: { slug: formSlug }
   });
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <CircularProgress thickness={5} />;
 
   // Handle error state
   if (error) return <div>Error loading form data.</div>;

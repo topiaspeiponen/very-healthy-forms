@@ -2,6 +2,30 @@ export type FormsResponse = {
     forms: Questionnaire[];
 }
 
+export type SubmissionsResponse = {
+    submissions: Submission[];
+}
+
+export type Submission = {
+    created: string;
+    formId: string;
+    id: string;
+    score: number;
+    submitterName: string;
+    form: {
+        name: string;
+        slug: string;
+    }
+    submissionFields: SubmissionField[]
+}
+
+export type SubmissionField = {
+    formFieldId: string;
+    formSubmissionId: string;
+    name: string;
+    value: string;
+}
+
 export type Questionnaire = {
     id: string;
     name: string;
@@ -15,19 +39,6 @@ export type QuestionnaireField = {
     fieldName: string;
     fieldType: string;
     fieldLabel: string;
-}
-
-export type Core10Form = {
-    "1": number;
-    "2": number;
-    "3": number;
-    "4": number;
-    "5": number;
-    "6": number;
-    "7": number;
-    "8": number;
-    "9": number;
-    "10": number;
 }
 
 export type RadioGroupQuestion = {

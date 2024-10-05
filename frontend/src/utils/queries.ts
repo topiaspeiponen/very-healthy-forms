@@ -16,3 +16,26 @@ export const GET_FORMS = gql`
     }
   }
 `;
+
+export const GET_SUBMISSIONS = gql`
+  query {
+    submissions {
+      created
+      formId
+      id
+      submitterName
+      score
+      form {
+        name
+        slug
+      }
+      submissionFields {
+          formFieldId
+          formSubmissionId
+          id
+          name
+          value
+        }
+    }
+  }
+`;

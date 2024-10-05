@@ -25,6 +25,7 @@ public class FormSubmission {
     public required string SubmitterName { get; set; }
     public Form? Form { get; set; }
     public ICollection<FormSubmissionField>? SubmissionFields { get; set; }
+    public int Score { get; set; }
 }
 public class FormSubmissionField {
     public Guid Id { get; set; }

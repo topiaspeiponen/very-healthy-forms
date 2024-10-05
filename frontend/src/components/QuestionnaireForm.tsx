@@ -1,13 +1,15 @@
-import { Button, Paper, Stack, Typography } from "@mui/material";
+import { Button, Divider, IconButton, Paper, Stack, Typography } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Questionnaire, QuestionnaireField } from "../utils/types.ts";
 import InputRadioGroup from "./InputRadioGroup.tsx";
-import styles from './questionnaire-form.module.css';
 import InputText from "./InputText.tsx";
 import { useMutation } from "@apollo/client";
 import { CREATE_FORM_SUBMISSION } from "../utils/mutations.ts";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import { Fragment } from "react/jsx-runtime";
+import FormField from "./FormField.tsx";
 
 
 const generateZodSchema = (fields: QuestionnaireField[]) => {
@@ -70,7 +72,6 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
 
 
     const submitForm = async (data: Record<string, number | string>) => {
-        console.log(data);
         const input = {
             input: {
                 formId: form.id,
@@ -80,92 +81,60 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
                     return {
                         formFieldId: field?.id,
                         name: key,
-                        value: data[key].toString()
+                        value: data[key].toString(),
                     }
                 }),
             }
         }
-        console.log(input)
+
         try {
-            console.log('trying to create')
-            // Execute the mutation with input data
             const result = await createFormSubmission({
                 variables: input,
             });
-            reset();
             console.log('Form submitted successfully:', result);
         } catch (err) {
             console.error('Error submitting form:', err);
         }
     };
 
-    const renderFormField = (field: QuestionnaireField) => {
-        switch (field.fieldType) {
-            case 'TEXT':
-                return (
-                    <InputText
-                        name={field.fieldName}
-                        label={field.fieldLabel}
-                        control={control}
-                        optionType="string"
-                        key={field.id}
-                    />
-                )
-            case 'RADIO_NUMBER':
-                return (
-                    <InputRadioGroup<Record<string, string | number>>
-                        name={field.fieldName}
-                        control={control}
-                        optionType="number"
-                        key={field.id}
-                        question={{
-                            id: field.id,
-                            groupLabel: field.fieldLabel,
-                            options: [0, 1, 2, 3, 4].map(num => {
-                                return {
-                                    label: num.toString(),
-                                    value: num
-                                }
-                            })
-
-                        }} />
-                )
-            case 'RADIO_NUMBER_REVERSE':
-                return (
-                    <InputRadioGroup<Record<string, string | number>>
-                        name={field.fieldName}
-                        control={control}
-                        optionType="number"
-                        key={field.id}
-                        question={{
-                            id: field.id,
-                            groupLabel: field.fieldLabel,
-                            options: [4, 3, 2, 1, 0].map(num => {
-                                return {
-                                    label: num.toString(),
-                                    value: num
-                                }
-                            })
-
-                        }} />
-                )
-            default:
-                return null;
-        }
-    }
-
+    
     return (
-        <Paper className={styles['main-container']} elevation={4}>
-            <Typography variant="h3" component="h1">
+        <Paper
+            elevation={4}
+            sx={{
+                margin: '4rem 0',
+                padding: '2rem',
+                width:  {
+                    xs: 'fit-content',
+                    md: '750px'
+                }
+            }}
+        >
+            <IconButton sx={{ padding: 0, marginBottom: '1rem'}} color="primary" href="/">
+                <ArrowBack />
+            </IconButton>
+            <Typography variant="h4" component="h1">
                 {form.name} kysely
             </Typography>
             <form onSubmit={handleSubmit((data) => submitForm(data))}>
-                <Stack>
-                    {form.fields.map((field) => {
-                        return renderFormField(field)
+                <Stack
+                    useFlexGap
+                    sx={{
+                        marginTop: '1rem',
+                        marginBottom: '1rem',
+                        gap: '1rem'
+                    }}
+                >
+                    {form.fields.map((field, index) => {
+                        return (
+                            <FormField 
+                                field={field}
+                                isLastField={index === form.fields.length-1}
+                                control={control}
+                            />)
                     })}
                 </Stack>
-                <Button type="submit" variant="outlined">
+                <Button type="submit" variant="contained">
                     Lähetä
                 </Button>
             </form>

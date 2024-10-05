@@ -5,12 +5,10 @@ type InputTextProps<T extends Record<string, string | number>> = {
     name: Path<T>;
     label: string;
     control: Control<T, string>;
-    optionType: 'string' | 'number';
-    background?: 'light' | 'dark';
 }
 
 export default function InputText(props: InputTextProps<Record<string, string | number>>) {
-    const { name, label, control, optionType, background } = props;
+    const { name, label, control } = props;
 
     return (
         <Controller

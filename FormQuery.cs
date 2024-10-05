@@ -31,7 +31,9 @@ public class FormSubmissionQueryType : ObjectType<FormSubmission>
         descriptor.Field(fs => fs.Id).Type<NonNullType<IdType>>();
         descriptor.Field(fs => fs.FormId).Type<NonNullType<IntType>>();
         descriptor.Field(fs => fs.SubmissionFields).Type<ListType<FormSubmissionFieldType>>();
+        descriptor.Field(fs => fs.Score).Type<IntType>();
     }
+
 }
 public class FormSubmissionFieldType : ObjectType<FormSubmissionField>
 {
@@ -52,7 +54,10 @@ public class Query {
             .Include(f => f.Fields)
             .FirstOrDefaultAsync(f => f.Id == id);
     public  async Task<List<FormSubmission>> GetSubmissions([Service] FormsDbContext dbContext)
-        => await dbContext.FormSubmissions.ToListAsync();
+        => await dbContext.FormSubmissions
+            .Include(f => f.SubmissionFields)
+            .Include(f => f.Form)
+            .ToListAsync();
     public  async Task<FormSubmission?> GetSubmission([Service] FormsDbContext dbContext, Guid id)
         => await dbContext.FormSubmissions
             .Include(f => f.SubmissionFields)

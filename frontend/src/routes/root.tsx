@@ -1,4 +1,4 @@
-import { Button, Paper } from '@mui/material';
+import { Button, CircularProgress, Paper } from '@mui/material';
 import styles from './root.module.css';
 import { useQuery } from '@apollo/client';
 import { FormsResponse } from '../utils/types';
@@ -7,12 +7,12 @@ import { GET_FORMS } from '../utils/queries';
 export default function Root() {
   const { loading, error, data } = useQuery<FormsResponse>(GET_FORMS);
 
-  if (loading) return 'Loading saatana';
+  if (loading) return <CircularProgress thickness={5} />;
   if (error) return 'Error perkele';
   console.log('Data ', data);
 
   return (
-    <Paper classes={styles.container} elevation={3} square>
+    <Paper className={styles.container} elevation={3} square>
       <h1> What to do?</h1>
       <div className="button-container">
         <Button
