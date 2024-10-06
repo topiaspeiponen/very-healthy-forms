@@ -2,14 +2,14 @@ import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import './index.css'
-/* existing imports */
 import Root from './routes/root.tsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FillForm from './routes/fill-form/fill-form.tsx';
 import ViewForms from './routes/view-forms/view-forms.tsx';
-import SubmissionView from './components/SubmissionView.tsx';
 import createTheme from '@mui/material/styles/createTheme';
 import { ThemeProvider } from '@emotion/react';
+import ViewForm from './routes/view-form/view-form.tsx';
+import ErrorPage from './components/ErrorPage.tsx';
 
 const theme = createTheme({
   palette: {
@@ -32,6 +32,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Root />,
+    errorElement: <ErrorPage text="Jokin meni pieleen" />
   },
   {
     path: "/fill-form/:formSlug",
@@ -44,12 +45,12 @@ const router = createBrowserRouter([
 
   {
     path: "/view-forms/:formId",
-    element: <SubmissionView />
+    element: <ViewForm />
   }
 ]);
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5198/graphql',
+  uri: 'https://localhost:7500/graphql',
   cache: new InMemoryCache(),
 });
 

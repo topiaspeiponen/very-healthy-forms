@@ -1,5 +1,8 @@
-import { Container, Link, ListItem, ListItemText, Typography } from "@mui/material";
+import ListItem from "@mui/material/ListItem";
 import { Submission } from "../utils/types"
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import { Link } from "react-router-dom";
 
 type SubmissionsListItemProps = {
     submission: Submission
@@ -11,7 +14,7 @@ export default function SubmissionsListItem(props: SubmissionsListItemProps) {
     return (
         <ListItem
             component={Link}
-            href={`/view-forms/${submission.id}`}
+            to={`/view-forms/${submission.id}`}
             alignItems="flex-start"
             sx={{
                 flexDirection: 'column',

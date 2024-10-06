@@ -8,11 +8,12 @@ import { Control } from "react-hook-form";
 type RenderFormFieldProps = {
     field: QuestionnaireField;
     isLastField: boolean;
-    control: Control<Record<string, string | number>, any>
+    control: Control<Record<string, string | number>, any>,
+    preview: boolean;
 }
 
 export default function renderFormField(props: RenderFormFieldProps) {
-    const { field, isLastField, control } = props;
+    const { field, isLastField, control, preview } = props;
 
     switch (field.fieldType) {
         case 'TEXT':
@@ -22,6 +23,7 @@ export default function renderFormField(props: RenderFormFieldProps) {
                     label={field.fieldLabel}
                     control={control}
                     key={field.id}
+                    preview={preview}
                 />
             )
         case 'RADIO_NUMBER':
@@ -53,6 +55,7 @@ export default function renderFormField(props: RenderFormFieldProps) {
                         name={field.fieldName}
                         control={control}
                         optionType="number"
+                        preview={preview}
                         question={{
                             id: field.id,
                             groupLabel: `${field.fieldName}. ${field.fieldLabel}`,
@@ -90,6 +93,7 @@ export default function renderFormField(props: RenderFormFieldProps) {
                         name={field.fieldName}
                         control={control}
                         optionType="number"
+                        preview={preview}
                         question={{
                             id: field.id,
                             groupLabel: `${field.fieldName}. ${field.fieldLabel}`,

@@ -46,21 +46,35 @@ public class FormSubmissionFieldType : ObjectType<FormSubmissionField>
     }
 }
 
-public class Query { 
-    public  async Task<List<Form>> GetForms([Service] FormsDbContext dbContext)
+public class Query
+{
+    public async Task<List<Form>> GetForms([Service] FormsDbContext dbContext)
         => await dbContext.Forms.Include(f => f.Fields).ToListAsync();
-    public  async Task<Form?> GetForm([Service] FormsDbContext dbContext, Guid id)
+    public async Task<Form?> GetForm([Service] FormsDbContext dbContext, Guid id)
         => await dbContext.Forms
             .Include(f => f.Fields)
             .FirstOrDefaultAsync(f => f.Id == id);
-    public  async Task<List<FormSubmission>> GetSubmissions([Service] FormsDbContext dbContext)
+    public async Task<List<FormSubmission>> GetSubmissions([Service] FormsDbContext dbContext)
         => await dbContext.FormSubmissions
             .Include(f => f.SubmissionFields)
             .Include(f => f.Form)
             .ToListAsync();
-    public  async Task<FormSubmission?> GetSubmission([Service] FormsDbContext dbContext, Guid id)
-        => await dbContext.FormSubmissions
+    public async Task<FormSubmission?> GetSubmission([Service] FormsDbContext dbContext, Guid id)
+    {
+        // Fetch the submission and related form and submission fields
+        var submission = await dbContext.FormSubmissions
             .Include(f => f.SubmissionFields)
+            .Include(f => f.Form)
             .FirstOrDefaultAsync(f => f.Id == id);
+
+        // Get form fields for form if form exists (it always should)
+        if (submission != null && submission.Form != null)
+        {
+            await dbContext.Entry(submission.Form)
+                .Collection(f => f.Fields)
+                .LoadAsync();
+        }
+        return submission;
+    }
 }
 

@@ -1,7 +1,12 @@
-import { IconButton, List, Paper, Typography } from "@mui/material";
+
+import Paper from "@mui/material/Paper";
 import { Submission } from "../utils/types"
 import SubmissionsListItem from "./SubmissionListItem";
 import ArrowBack from "@mui/icons-material/ArrowBack";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import List from "@mui/material/List";
+import { Link } from "react-router-dom";
 
 type SubmissionsListProps = {
     submissions: Submission[]
@@ -22,9 +27,14 @@ export default function SubmissionsList(props: SubmissionsListProps) {
                     }
                 }}
             >
-                <IconButton href="/">
-                    <ArrowBack />
-                </IconButton>
+                
+            <IconButton
+                component={Link}
+                sx={{ padding: 0, marginBottom: '1rem'}}
+                color="primary"
+                to="/">
+                <ArrowBack />
+            </IconButton>
                 <Typography variant="h3" component={"h1"}>
                     Täytetyt kyselyt
                 </Typography>

@@ -1,20 +1,28 @@
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, FormHelperText, Grid2 } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
 import { RadioGroupQuestion } from "../utils/types";
 import { Control, Controller, Path } from "react-hook-form";
+import Grid2 from "@mui/material/Grid2";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from "@mui/material/Radio";
+import FormHelperText from "@mui/material/FormHelperText";
 
 type InputRadioGroupProps<T extends Record<string, string | number>> = {
     name: Path<T>;
     control: Control<T, number>;
     question: RadioGroupQuestion;
     optionType: 'string' | 'number';
+    preview: boolean;
 }
 
 export default function InputRadioGroup<T extends Record<string, string | number>>(props: InputRadioGroupProps<T>) {
-    const { name, control, optionType, question } = props;
+    const { name, control, optionType, question, preview } = props;
     return (
         <FormControl
             component="fieldset"
             required
+            disabled={preview}
             sx={{
                 display: 'flex',
                 flexDirection: 'row'
@@ -51,7 +59,7 @@ export default function InputRadioGroup<T extends Record<string, string | number
                                             key={`form-control-label-${option.value}-${question.id}`}
                                             value={option.value}
                                             control={<Radio />}
-                                            label={option.label}
+                                            label={preview ? `${option.label} (${option.value})` : option.label}
                                         />
                                     )
                                 })}

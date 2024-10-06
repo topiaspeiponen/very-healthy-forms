@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import { GET_FORMS } from "../../utils/queries.ts";
 import QuestionnaireForm from "../../components/QuestionnaireForm.tsx";
-import { CircularProgress } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+import NotFound from "../../components/NotFound.tsx";
 
 export default function FillForm() {
   const { formSlug } = useParams<{ formSlug: string }>();
@@ -11,19 +12,15 @@ export default function FillForm() {
     variables: { slug: formSlug }
   });
 
-  if (loading) return <CircularProgress thickness={5} />;
-
-  // Handle error state
-  if (error) return <div>Error loading form data.</div>;
-
   const questionnaireForm = data?.forms[0];
+
+  if (loading) return <CircularProgress thickness={5} />;
+  if (error) return <NotFound text="Kyselyn vastauksien hakemisessa tapahtui virhe" />;
+  if (!questionnaireForm) return <NotFound text="Kyselyn vastauksia ei löytynyt" />;
 
   return (
     <>
-      {questionnaireForm ?
-        <QuestionnaireForm form={questionnaireForm} />
-        : <div> ei löydy </div>
-      }
+      <QuestionnaireForm form={questionnaireForm} />
     </>
   )
 }

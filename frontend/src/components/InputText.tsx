@@ -5,10 +5,11 @@ type InputTextProps<T extends Record<string, string | number>> = {
     name: Path<T>;
     label: string;
     control: Control<T, string>;
+    preview: boolean;
 }
 
 export default function InputText(props: InputTextProps<Record<string, string | number>>) {
-    const { name, label, control } = props;
+    const { name, label, control, preview } = props;
 
     return (
         <Controller
@@ -19,6 +20,7 @@ export default function InputText(props: InputTextProps<Record<string, string | 
                 fieldState: { error },
             }) => (
                 <TextField
+                    disabled={preview}
                     helperText={error ? error.message : null}
                     size="small"
                     error={!!error}

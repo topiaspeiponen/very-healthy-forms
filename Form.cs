@@ -4,7 +4,7 @@ public class Form {
     public Guid Id { get; set; }
     public required string Name { get; set; }
     public required string Slug { get; set; }
-    public ICollection<FormField>? Fields { get; set; }
+    public ICollection<FormField> Fields { get; set; } = new List<FormField>();
 }
 public enum FormFieldType {
     RadioNumber, RadioNumberReverse, Text

@@ -14,7 +14,7 @@ public class FormsDbContext : DbContext
         {
             Id = core10FormId,
             Name = "Core-10",
-            Slug = "core-10"
+            Slug = "core-10",
         };
         modelBuilder.Entity<Form>().HasData(core10form);
         modelBuilder.Entity<FormField>().HasData(

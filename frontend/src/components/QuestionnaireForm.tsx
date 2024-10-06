@@ -1,15 +1,18 @@
-import { Button, Divider, IconButton, Paper, Stack, Typography } from "@mui/material";
+
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Questionnaire, QuestionnaireField } from "../utils/types.ts";
-import InputRadioGroup from "./InputRadioGroup.tsx";
-import InputText from "./InputText.tsx";
 import { useMutation } from "@apollo/client";
 import { CREATE_FORM_SUBMISSION } from "../utils/mutations.ts";
 import ArrowBack from "@mui/icons-material/ArrowBack";
-import { Fragment } from "react/jsx-runtime";
 import FormField from "./FormField.tsx";
+import Paper from "@mui/material/Paper";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 
 const generateZodSchema = (fields: QuestionnaireField[]) => {
@@ -43,7 +46,7 @@ const generateZodSchema = (fields: QuestionnaireField[]) => {
 
 type QuestionnaireFormProps = {
     form: Questionnaire;
-}
+} 
 
 const initializeDefaultValues = (form: Questionnaire) => {
     const defaultValues = form.fields.reduce((acc, field) => {
@@ -63,7 +66,7 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
     const {
         handleSubmit,
         control,
-        reset
+        //reset
     } = useForm<Record<string, string | number>>(
         {
             resolver: zodResolver(validationSchema),
@@ -110,7 +113,11 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
                 }
             }}
         >
-            <IconButton sx={{ padding: 0, marginBottom: '1rem'}} color="primary" href="/">
+            <IconButton
+                component={Link}
+                sx={{ padding: 0, marginBottom: '1rem'}}
+                color="primary"
+                to="/">
                 <ArrowBack />
             </IconButton>
             <Typography variant="h4" component="h1">
@@ -131,6 +138,7 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
                                 field={field}
                                 isLastField={index === form.fields.length-1}
                                 control={control}
+                                preview={false}
                             />)
                     })}
                 </Stack>

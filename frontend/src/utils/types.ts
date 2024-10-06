@@ -6,6 +6,10 @@ export type SubmissionsResponse = {
     submissions: Submission[];
 }
 
+export type SubmissionResponse = {
+    submission: Submission;
+}
+
 export type Submission = {
     created: string;
     formId: string;
@@ -15,6 +19,7 @@ export type Submission = {
     form: {
         name: string;
         slug: string;
+        fields: QuestionnaireField[]
     }
     submissionFields: SubmissionField[]
 }
