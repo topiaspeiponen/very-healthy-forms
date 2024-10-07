@@ -79,14 +79,8 @@ const router = createBrowserRouter([
 ]);
 
 const client = new ApolloClient({
-  uri: 'http://localhost:5198/graphql',
-  cache: new InMemoryCache({
-    typePolicies: {
-      Submission: {
-        keyFields: ['id']
-      }
-    }
-  }),
+  uri: `${import.meta.env.VITE_REACT_APP_GRAPHQL_URI}`,
+  cache: new InMemoryCache(),
 });
 
 

@@ -5,11 +5,10 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Paper from '@mui/material/Paper';
 import Button from '@mui/material/Button';
 import { Link } from 'react-router-dom';
-import NotFound from '../components/NotFound';
 
 
 export default function Root() {
-  const { loading, error, data } = useQuery<FormsResponse>(GET_FORMS);
+  const { loading, data } = useQuery<FormsResponse>(GET_FORMS);
 
   if (loading) return <CircularProgress thickness={5} />;
   //if (error) return <NotFound text="Lomakkeiden hakemisessa tapahtui virhe" />;

@@ -7,8 +7,8 @@ import { visualizer } from 'rollup-plugin-visualizer';
 export default defineConfig({
   plugins: [
     react(),
-    visualizer({
+    /*visualizer({
       open: true
-    })
+    })*/
   ],
 })
