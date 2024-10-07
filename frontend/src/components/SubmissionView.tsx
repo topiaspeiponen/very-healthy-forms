@@ -16,7 +16,7 @@ export default function SubmissionView(props: SubmissionViewProps) {
     const { submission } = props;
 
     const initializeDefaultValues = (fields: SubmissionField[]) => {
-        const defaultValues : Record<string, string> = {};
+        const defaultValues: Record<string, string> = {};
         fields.forEach((field) => {
             defaultValues[field.name] = field.value;
         })
@@ -30,54 +30,58 @@ export default function SubmissionView(props: SubmissionViewProps) {
             defaultValues: initializeDefaultValues(submission.submissionFields)
         });
 
-  
-  return (
-      <Paper
-          elevation={4}
-          sx={{
-              margin: '4rem 0',
-              padding: '2rem',
-              width:  {
-                  xs: 'fit-content',
-                  md: '750px'
-              }
-          }}
-      >
-          <IconButton
-            component={Link}
-            sx={{ padding: 0, marginBottom: '1rem'}}
-            color="primary"
-            to="/view-forms">
-              <ArrowBack />
-              <Typography>
-                Takaisin
-              </Typography>
-          </IconButton>
-          <Typography variant="h4" component="h1">
-              {submission.form.name} kysely
-          </Typography>
-          <Typography component="p">
-              Yhteispisteet: {submission.score}
-          </Typography>
-              <Stack
-                  useFlexGap
-                  sx={{
-                      marginTop: '1rem',
-                      marginBottom: '1rem',
-                      gap: '1rem'
-                  }}
-              >
-                  {submission.form.fields.map((field, index) => {
-                      return (
-                          <FormField
-                              key={field.id}
-                              preview 
-                              field={field}
-                              isLastField={index === submission.form.fields.length-1}
-                              control={control}
-                          />)
-                  })}
-              </Stack>
-      </Paper>
-  );
+
+    return (
+        <Paper
+            elevation={4}
+            sx={{
+                margin: {
+                    xs: '2rem 0.5rem',
+                    md: '4rem 1rem'
+                },
+                padding: '2rem',
+                width: {
+                    xs: 'fit-content',
+                    md: '750px',
+                    xl: '1000px'
+                }
+            }}
+        >
+            <IconButton
+                component={Link}
+                sx={{ padding: 0, marginBottom: '1rem' }}
+                color="primary"
+                to="/view-forms">
+                <ArrowBack />
+                <Typography>
+                    Takaisin
+                </Typography>
+            </IconButton>
+            <Typography variant="h4" component="h1">
+                {submission.form.name} kysely
+            </Typography>
+            <Typography component="p">
+                Yhteispisteet: {submission.score}
+            </Typography>
+            <Stack
+                useFlexGap
+                sx={{
+                    marginTop: '1rem',
+                    marginBottom: '1rem',
+                    gap: '1rem'
+                }}
+            >
+                {submission.form.fields.map((field, index) => {
+                    return (
+                        <FormField
+                            key={field.id}
+                            preview
+                            field={field}
+                            isLastField={index === submission.form.fields.length - 1}
+                            control={control}
+                        />)
+                })}
+            </Stack>
+        </Paper>
+    );
 }

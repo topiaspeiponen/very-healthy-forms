@@ -66,8 +66,8 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
     const {
         handleSubmit,
         control,
-        formState: { errors }
-        //reset
+        formState: { errors },
+        reset
     } = useForm<Record<string, string | number>>(
         {
             resolver: zodResolver(validationSchema),
@@ -95,6 +95,7 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
             const result = await createFormSubmission({
                 variables: input,
             });
+            reset();
             console.log('Form submitted successfully:', result);
         } catch (err) {
             console.error('Error submitting form:', err);
@@ -105,11 +106,15 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
         <Paper
             elevation={4}
             sx={{
-                margin: '4rem 0',
+                margin: {
+                    xs: '2rem 0.5rem',
+                    md: '4rem 1rem'
+                },
                 padding: '2rem',
                 width: {
                     xs: 'fit-content',
-                    md: '750px'
+                    md: '750px',
+                    xl: '1000px'
                 }
             }}
         >

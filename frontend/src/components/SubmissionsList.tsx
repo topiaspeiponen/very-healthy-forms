@@ -23,11 +23,19 @@ export default function SubmissionsList(props: SubmissionsListProps) {
     return (
         <Paper
             sx={{
-                padding: '2rem',
+                padding: {
+                    xs: '1rem',
+                    sm: '2rem'
+                },
+                margin: {
+                    xs: '0.5rem',
+                    md: '1rem'
+                },
                 minWidth: {
                     xs: 'auto',
                     md: '500px',
-                    lg: '750px'
+                    lg: '750px',
+                    xl: '1000px'
                 }
             }}
         >
