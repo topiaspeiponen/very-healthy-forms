@@ -24,7 +24,7 @@ Requires:
 - .NET 8.0 SDK
 
 1. Navigate to the root directory
-2. Run ```dotnet watch```. This starts the backend app with hot reload feature (useful for development).
+2. Run ```dotnet run --launch-profile https```
 
 ## Testing the production version
 
