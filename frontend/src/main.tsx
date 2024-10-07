@@ -77,7 +77,7 @@ const router = createBrowserRouter([
     )
   }
 ]);
-
+console.log(import.meta.env.VITE_REACT_APP_GRAPHQL_URI)
 const client = new ApolloClient({
   uri: `${import.meta.env.VITE_REACT_APP_GRAPHQL_URI}`,
   cache: new InMemoryCache(),

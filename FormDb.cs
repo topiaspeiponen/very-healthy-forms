@@ -18,7 +18,7 @@ public class FormsDbContext : DbContext
         };
         modelBuilder.Entity<Form>().HasData(core10form);
         modelBuilder.Entity<FormField>().HasData(
-           new FormField { Id = Guid.NewGuid(), FormId = core10FormId, FieldName = "name", FieldType = FormFieldType.Text, FieldLabel = "Nimesi" },
+           new FormField { Id = Guid.NewGuid(), FormId = core10FormId, FieldName = "name", FieldType = FormFieldType.Text, FieldLabel = "Nimi" },
            new FormField { Id = Guid.NewGuid(), FormId = core10FormId, FieldName = "1", FieldType = FormFieldType.RadioNumber, FieldLabel = "Olen ollut kireä, ahdistunut, tai hermostunut" },
            new FormField { Id = Guid.NewGuid(), FormId = core10FormId, FieldName = "2", FieldType = FormFieldType.RadioNumberReverse, FieldLabel = "Olen tuntenut, että minulla on joku, joka tarvittaessa tukee minua" },
            new FormField { Id = Guid.NewGuid(), FormId = core10FormId, FieldName = "3", FieldType = FormFieldType.RadioNumberReverse, FieldLabel = "Olen tuntenut selviytyväni, vaikka asiat menevät pieleen" },

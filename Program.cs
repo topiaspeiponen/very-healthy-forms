@@ -4,18 +4,22 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+bool isDev = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development";
+
 builder.Services.AddDbContext<FormsDbContext>(opt => opt.UseInMemoryDatabase("Forms"));
-builder.Services.AddCors(options =>
-{
-    options.AddDefaultPolicy(
-        policy =>
-        {
-            policy
-            .AllowAnyHeader()
-            .AllowAnyMethod()
-            .AllowAnyOrigin();
-        });
-});
+if (isDev) {
+    builder.Services.AddCors(options =>
+    {
+        options.AddDefaultPolicy(
+            policy =>
+            {
+                policy
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin();
+            });
+    });
+}
 
 builder.Services.AddAuthorization();
 builder.Services
@@ -25,13 +29,15 @@ builder.Services
 
 var app = builder.Build();
 
+
 // Serve React app from ./frontend/dist directory
 app.UseFileServer(new FileServerOptions
 {
     FileProvider = new PhysicalFileProvider(
            System.IO.Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
 });
-app.UseCors();
+
+if (isDev) app.UseCors();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

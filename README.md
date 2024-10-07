@@ -1,6 +1,7 @@
 # Overview
 
-This repository contains the backend code for ASP.NET Core app and code for a React frontend in the ```./frontend``` directory.
+This repository contains the backend code for ASP.NET Core app and
+code for a React frontend in the ```./frontend``` directory.
 
 ## Development
 
@@ -37,6 +38,6 @@ Requires:
 **Setup ASP.NET Core**
 
 1. Navigate to the root directory
-2. Run ```dotnet run --launch-profile https```
+2. Run ```dotnet run --launch-profile production```
 
 React app is now served from the root URL of the running backend service.
