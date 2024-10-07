@@ -5,6 +5,14 @@ code for a React frontend in the ```./frontend``` directory.
 
 ## Development
 
+**Setup ASP.NET Core**
+
+Requires:
+- .NET 8.0 SDK
+
+1. Navigate to the root directory
+2. Run ```dotnet run --launch-profile https```
+
 **Setup React app**
 
 Requires:
@@ -18,14 +26,6 @@ Requires:
 
 React app is now served from the dev server.
 
-**Setup ASP.NET Core**
-
-Requires:
-- .NET 8.0 SDK
-
-1. Navigate to the root directory
-2. Run ```dotnet run --launch-profile https```
-
 ## Testing the production version
 
 **Build React app**
@@ -38,6 +38,7 @@ Requires:
 **Setup ASP.NET Core**
 
 1. Navigate to the root directory
-2. Run ```dotnet run --launch-profile production```
+2. Run ```dotnet run --launch-profile production```. Make sure you have built the React app before running production mode,
+as the build directory needs to exist.
 
 React app is now served from the root URL of the running backend service.

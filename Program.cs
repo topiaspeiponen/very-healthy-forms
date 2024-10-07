@@ -30,12 +30,14 @@ builder.Services
 var app = builder.Build();
 
 
-// Serve React app from ./frontend/dist directory
-app.UseFileServer(new FileServerOptions
-{
-    FileProvider = new PhysicalFileProvider(
-           System.IO.Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
-});
+if (!isDev) {
+    // Serve React app from ./frontend/dist directory
+    app.UseFileServer(new FileServerOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            System.IO.Path.Combine(builder.Environment.ContentRootPath, "frontend", "dist"))
+    });
+}
 
 if (isDev) app.UseCors();
 app.UseHttpsRedirection();
