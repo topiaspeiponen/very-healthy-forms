@@ -29,6 +29,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiListItem: {
+      styleOverrides: {
+        root: {
+          color: 'black',
+          textDecoration: 'none'
+        }
+      }
+    }
   },
 });
 
@@ -71,8 +79,14 @@ const router = createBrowserRouter([
 ]);
 
 const client = new ApolloClient({
-  uri: 'https://localhost:7500/graphql',
-  cache: new InMemoryCache(),
+  uri: 'http://localhost:5198/graphql',
+  cache: new InMemoryCache({
+    typePolicies: {
+      Submission: {
+        keyFields: ['id']
+      }
+    }
+  }),
 });
 
 

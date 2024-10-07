@@ -30,7 +30,7 @@ export default function InputRadioGroup<T extends Record<string, string | number
         >
             <Grid2 sx={{ width: '100%' }} container spacing={2}>
                 <Grid2 size={6}>
-                <FormLabel component="legend">{question.groupLabel}</FormLabel>
+                    <FormLabel component="legend">{question.groupLabel}</FormLabel>
                 </Grid2>
                 <Controller
                     name={name}
@@ -39,7 +39,7 @@ export default function InputRadioGroup<T extends Record<string, string | number
                         field: { onChange, value },
                         fieldState: { error },
                     }) => (
-                        
+
                         <Grid2 size={6}>
                             <RadioGroup
                                 value={value}
@@ -65,7 +65,7 @@ export default function InputRadioGroup<T extends Record<string, string | number
                                 })}
                             </RadioGroup>
                             {error?.message && <FormHelperText error>{error.message}</FormHelperText>}
-                        
+
                         </Grid2>
                     )}
                 />

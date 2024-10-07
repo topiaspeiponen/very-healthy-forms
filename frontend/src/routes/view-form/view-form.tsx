@@ -15,7 +15,7 @@ export default function ViewForm() {
 
 
   if (loading) return <CircularProgress thickness={5} />;
-  if (error) return <NotFound text="Kyselyn vastauksien hakemisessa tapahtui virhe" />;
+  if (error) return <NotFound text="Sivua ei löytynyt" />;
   if (!data?.submission) return <NotFound text="Kyselyn vastauksia ei löytynyt" />;
 
   return (

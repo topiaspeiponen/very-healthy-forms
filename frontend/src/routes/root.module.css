@@ -1,8 +1,0 @@
-.container {
-    padding: 1rem;
-}
-.button-container {
-    display: flex;
-    flex-flow: row nowrap;
-    gap: 1rem;
-}

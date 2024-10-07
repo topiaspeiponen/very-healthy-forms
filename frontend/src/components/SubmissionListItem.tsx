@@ -17,8 +17,13 @@ export default function SubmissionsListItem(props: SubmissionsListItemProps) {
             to={`/view-forms/${submission.id}`}
             alignItems="flex-start"
             sx={{
+                textDecoration: 'none',
                 flexDirection: 'column',
-                padding: '1rem'
+                padding: '1rem',
+                transition: 'all 0.25s',
+                ':hover': {
+                    backgroundColor: 'primary.main'
+                }
             }}>
             <Typography variant="h5" component={"h2"}>
                 {submission.form.name}

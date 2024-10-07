@@ -46,7 +46,7 @@ const generateZodSchema = (fields: QuestionnaireField[]) => {
 
 type QuestionnaireFormProps = {
     form: Questionnaire;
-} 
+}
 
 const initializeDefaultValues = (form: Questionnaire) => {
     const defaultValues = form.fields.reduce((acc, field) => {
@@ -66,6 +66,7 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
     const {
         handleSubmit,
         control,
+        formState: { errors }
         //reset
     } = useForm<Record<string, string | number>>(
         {
@@ -100,14 +101,13 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
         }
     };
 
-    
     return (
         <Paper
             elevation={4}
             sx={{
                 margin: '4rem 0',
                 padding: '2rem',
-                width:  {
+                width: {
                     xs: 'fit-content',
                     md: '750px'
                 }
@@ -115,7 +115,7 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
         >
             <IconButton
                 component={Link}
-                sx={{ padding: 0, marginBottom: '1rem'}}
+                sx={{ padding: 0, marginBottom: '1rem' }}
                 color="primary"
                 to="/">
                 <ArrowBack />
@@ -134,14 +134,20 @@ export default function QuestionnaireForm(props: QuestionnaireFormProps) {
                 >
                     {form.fields.map((field, index) => {
                         return (
-                            <FormField 
+                            <FormField
+                                key={field.id}
                                 field={field}
-                                isLastField={index === form.fields.length-1}
+                                isLastField={index === form.fields.length - 1}
                                 control={control}
                                 preview={false}
                             />)
                     })}
                 </Stack>
+                {Object.keys(errors).length > 0 && (
+                    <Typography color="error" sx={{ marginBottom: '1rem' }}>
+                        Lomakkeessa on virheitä, jotka on korjattava
+                    </Typography>
+                )}
                 <Button type="submit" variant="contained">
                     Lähetä
                 </Button>

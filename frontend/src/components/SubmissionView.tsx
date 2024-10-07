@@ -70,6 +70,7 @@ export default function SubmissionView(props: SubmissionViewProps) {
                   {submission.form.fields.map((field, index) => {
                       return (
                           <FormField
+                              key={field.id}
                               preview 
                               field={field}
                               isLastField={index === submission.form.fields.length-1}
