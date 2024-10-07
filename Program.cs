@@ -21,6 +21,8 @@ if (isDev) {
     });
 }
 
+builder.Services.AddHttpLogging(o => {});
+
 builder.Services.AddAuthorization();
 builder.Services
     .AddGraphQLServer()
@@ -40,6 +42,7 @@ if (!isDev) {
 }
 
 if (isDev) app.UseCors();
+app.UseHttpLogging();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
